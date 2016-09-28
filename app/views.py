@@ -7,10 +7,8 @@ import redis
 def get_messages():
     ps = redis.StrictRedis(host='ec2-52-54-82-137.compute-1.amazonaws.com', port=6379, db=0, password='').pubsub()
     ps.subscribe('tcp.private')
-    while True:
-        msg = ps.getMessage()
-        if msg:
-            print msg
+    for message in ps.listen():
+        print str(message['data'])
 
 @app.route('/deck')
 def deck():  
