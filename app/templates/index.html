@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type="text/javascript">
+  $(function() {
+
+    var submit_form = function(e) {
+      $.getJSON($SCRIPT_ROOT + '/_pull', {}, function(data) {
+        console.log(data.payloads);
+        $('#payload').text(data.payloads);
+
+        var tbody = $('#results tbody'),
+          props = ["Connection", "Protocol", "Classification"];
+        $.each(data.payloads, function(i, payload) {
+          var tr = $('<tr>');
+          $.each(props, function(i, prop) {
+            $('<td>').html(payload[prop]).appendTo(tr);
+          });
+          tbody.append(tr);
+        });
+      });
+      setTimeout(submit_form, 1000);
+    };
+
+
+
+    $('a#grab').bind('click', submit_form);
+
+    $('input[type=text]').bind('keydown', function(e) {
+      if (e.keyCode == 13) {
+        submit_form(e);
+      }
+    });
+
+  });
+
+  setTimeout(submit_form, 1000);
+</script>
+<h1>massieve</h1>
+<p><span id="payload">N/A</span>
+<table id="results">
+        <thead>
+            <tr>
+                <th>Connection</th><th>Protocol</th><th>Classification</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+<p><a href=# id=grab>Grab classifications</a>
+{% endblock %}
+
