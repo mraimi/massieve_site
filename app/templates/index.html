@@ -7,7 +7,13 @@
         var tbody = $('#results tbody').empty(),
           props = ["Connection", "Protocol", "Classification"];
         $.each(data.payloads, function(i, payload) {
-          var tr = $('<tr>');
+          var tr = $('<tr class="info">');
+          if (payload["Classification"] === "normal"){
+              tr = $('<tr class="success">');
+          } else if (payload["Classification"] === "anomalous") {
+              tr = $('<tr class="danger">');
+          }
+
           $.each(props, function(i, prop) {
             $('<td>').html(payload[prop]).appendTo(tr);
           });
@@ -28,14 +34,17 @@
 
   setTimeout(submit_form, 1000);
 </script>
-<h1>massieve</h1>
-<table id="results">
-        <thead>
-            <tr>
-                <th>Connection</th><th>Protocol</th><th>Classification</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-<p><a href=# id=grab>Grab classifications</a>
+<div class="center-block">
+    <h1>massieve</h1>
+        <table class="table" id="results">
+                <thead>
+                    <tr>
+                        <th>Connection</th><th>Protocol</th><th>Classification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+        </table>
+</div>
+<p><a href=# class="btn btn-info" role="button" id=grab>See traffic</a></p>
 {% endblock %}
