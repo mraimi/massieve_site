@@ -8,9 +8,9 @@
           props = ["Connection", "Protocol", "Classification"];
         $.each(data.payloads, function(i, payload) {
           var tr = $('<tr class="info">');
-          if (payload["Classification"] === "normal"){
+          if (payload["Classification"].toLowerCase() === "normal"){
               tr = $('<tr class="success">');
-          } else if (payload["Classification"] === "anomalous") {
+          } else if (payload["Classification"].toLowerCase() === "anomalous") {
               tr = $('<tr class="danger">');
           }
 
