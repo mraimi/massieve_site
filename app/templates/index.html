@@ -5,9 +5,6 @@
 
     var submit_form = function(e) {
       $.getJSON($SCRIPT_ROOT + '/_pull', {}, function(data) {
-        console.log(data.payloads);
-        $('#payload').text(data.payloads);
-
         var tbody = $('#results tbody'),
           props = ["Connection", "Protocol", "Classification"];
         $.each(data.payloads, function(i, payload) {
@@ -36,7 +33,6 @@
   setTimeout(submit_form, 1000);
 </script>
 <h1>massieve</h1>
-<p><span id="payload">N/A</span>
 <table id="results">
         <thead>
             <tr>
