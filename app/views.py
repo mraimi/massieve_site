@@ -8,14 +8,13 @@ def deck():
 
 @app.route('/_pull')
 def get_messages():
-    print "get_messages called"
+    print "INFO: Starting new batch..."
     ps = redis.StrictRedis(host='ec2-52-54-82-137.compute-1.amazonaws.com', port=6379, db=0, password='BFHW6zDv3g7kuxDxRXV7K8Y2pdyfR7kw').pubsub()
     ps.subscribe('tcp.http')
     payloads = []
     for i in xrange(0, 11):
         msg = ps.get_message(True, timeout=1000)
         if msg:
-            print str(msg['data'])
             vals = str(msg['data']).split(",")
             payloads.append({"Connection": vals[0], "Protocol": vals[1], "Classification": vals[2]})
     return jsonify(payloads=payloads)
