@@ -2,10 +2,9 @@
 {% block body %}
 <script type="text/javascript">
   $(function() {
-
     var submit_form = function(e) {
       $.getJSON($SCRIPT_ROOT + '/_pull', {}, function(data) {
-        var tbody = $('#results tbody'),
+        var tbody = $('#results tbody').empty(),
           props = ["Connection", "Protocol", "Classification"];
         $.each(data.payloads, function(i, payload) {
           var tr = $('<tr>');
@@ -18,8 +17,6 @@
       setTimeout(submit_form, 1000);
     };
 
-
-
     $('a#grab').bind('click', submit_form);
 
     $('input[type=text]').bind('keydown', function(e) {
@@ -27,7 +24,6 @@
         submit_form(e);
       }
     });
-
   });
 
   setTimeout(submit_form, 1000);
@@ -43,4 +39,3 @@
         </tbody>
 <p><a href=# id=grab>Grab classifications</a>
 {% endblock %}
-

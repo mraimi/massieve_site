@@ -12,7 +12,7 @@ def get_messages():
     ps = redis.StrictRedis(host='ec2-52-54-82-137.compute-1.amazonaws.com', port=6379, db=0, password='BFHW6zDv3g7kuxDxRXV7K8Y2pdyfR7kw').pubsub()
     ps.subscribe('tcp.private')
     payloads = []
-    for i in xrange(0,5):
+    for i in xrange(0, 11):
         msg = ps.get_message(True, timeout=1000)
         if msg:
             print str(msg['data'])
