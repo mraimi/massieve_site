@@ -3,9 +3,11 @@
 <script type="text/javascript">
   $(function() {
     var submit_form = function(e) {
-      $.getJSON($SCRIPT_ROOT + '/_pull', {}, function(data) {
-        var tbody = $('#results tbody').empty(),
-          props = ["Connection", "Protocol", "Classification"];
+      $.getJSON($SCRIPT_ROOT + '/_pull', {
+          conn: $( "#connectionDropdown option:selected" ).text(),
+          proto: $( "#protocolDropdown option:selected" ).text()
+      }, function(data) {
+        var tbody = $('#results tbody').empty(), props = ["Connection", "Protocol", "Classification"];
         $.each(data.payloads, function(i, payload) {
           var tr = $('<tr class="info">');
           if (payload["Classification"].toLowerCase() === "normal"){
@@ -20,7 +22,7 @@
           tbody.append(tr);
         });
       });
-      setTimeout(submit_form, 1000);
+      setTimeout(submit_form, 5000.0);
     };
 
     $('a#grab').bind('click', submit_form);
@@ -32,7 +34,6 @@
     });
   });
 
-  setTimeout(submit_form, 1000);
 </script>
 <div class="center-block">
     <h1>massieve</h1>
@@ -46,5 +47,21 @@
                 </tbody>
         </table>
 </div>
-<p><a href=# class="btn btn-info" role="button" id=grab>See traffic</a></p>
+
+
+<select id="connectionDropdown" class="selectpicker">
+  <option>tcp</option>
+  <option>udp</option>
+</select>
+
+<select id="protocolDropdown" class="selectpicker">
+  <option>*</option>
+  <option>http</option>
+  <option>sftp</option>
+  <option>ssh</option>
+</select>
+
+<a href=# class="btn btn-info" role="button" id=grab>See traffic</a>
+
 {% endblock %}
+
