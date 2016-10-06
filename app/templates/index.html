@@ -15,7 +15,6 @@
           } else if (payload["Classification"].toLowerCase() === "anomalous") {
               tr = $('<tr class="danger">');
           }
-
           $.each(props, function(i, prop) {
             $('<td>').html(payload[prop]).appendTo(tr);
           });
@@ -24,6 +23,7 @@
       });
       setTimeout(submit_form, 5000.0);
     };
+    setTimeout(submit_form, 10000.0);
 
     $('a#grab').bind('click', submit_form);
 
@@ -59,6 +59,7 @@
   <option>http</option>
   <option>sftp</option>
   <option>ssh</option>
+  <option>private</option>
 </select>
 
 <a href=# class="btn btn-info" role="button" id=grab>See traffic</a>

@@ -15,14 +15,16 @@ def get_messages():
     proto = request.args.get('proto')
     channel = conn + "." + proto
     print channel + ":" + str(int(round(time.time() * 1000)))
-    ps.subscribe(channel)
+    ps.psubscribe(channel)
     payloads = []
     for i in xrange(0, 11):
-        msg = ps.get_message(True, timeout=5.0)
+        msg = ps.get_message(True, timeout=1.0)
         print msg
         if msg:
             vals = str(msg['data']).split(",")
             payloads.append({"Connection": vals[0], "Protocol": vals[1], "Classification": vals[2]})
+        else:
+            jsonify(payloads=payloads)
     ps.close()
     return jsonify(payloads=payloads)
 
